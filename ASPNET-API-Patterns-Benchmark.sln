@@ -7,12 +7,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BCDE5232-17F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A43C66FD-604B-4D44-A30E-67124DB7C117}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQL-API", "src\Services\GraphQL-API\GraphQL-API.csproj", "{DD493B7F-3652-43B6-99BD-C4EB94699FA8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD493B7F-3652-43B6-99BD-C4EB94699FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD493B7F-3652-43B6-99BD-C4EB94699FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD493B7F-3652-43B6-99BD-C4EB94699FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD493B7F-3652-43B6-99BD-C4EB94699FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A43C66FD-604B-4D44-A30E-67124DB7C117} = {BCDE5232-17F4-48BD-92E6-6BEFAB1880D0}
+		{DD493B7F-3652-43B6-99BD-C4EB94699FA8} = {A43C66FD-604B-4D44-A30E-67124DB7C117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C00120EC-6539-42CE-BF62-6313017D0747}
