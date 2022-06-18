@@ -1,4 +1,5 @@
-﻿using GraphQL.SystemTextJson;
+﻿using GraphQL;
+using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using GraphQL_API.Models;
 using GraphQL_API.Queries;
@@ -11,10 +12,12 @@ namespace GraphQL_API.Controllers;
 public class CourseController : ControllerBase
 {
     private readonly ILogger<CourseController> _logger;
+    private readonly ISchema _schema;
 
-    public CourseController(ILogger<CourseController> logger)
+    public CourseController(ILogger<CourseController> logger, ISchema schema)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _schema = schema ?? throw new ArgumentNullException(nameof(schema));
     }
 
     [HttpGet]
@@ -54,5 +57,21 @@ public class CourseController : ControllerBase
         });
 
         return json;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
+    {
+        var result = await new DocumentExecuter()
+            .ExecuteAsync(executionOptions =>
+            {
+                executionOptions.Schema = _schema;
+                executionOptions.Query = query.Query;
+            });
+
+        if (result.Errors?.Count > 0)
+            return BadRequest(result.Errors);
+
+        return Ok(result);
     }
 }
