@@ -5,6 +5,7 @@ namespace GraphQL_API.Queries;
 
 public class Query
 {
+    [GraphQLMetadata("courses")]
     public List<Course> GetCourses()
     {
         var courses = new List<Course>

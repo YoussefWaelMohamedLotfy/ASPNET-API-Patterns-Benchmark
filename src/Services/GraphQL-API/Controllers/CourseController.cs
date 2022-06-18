@@ -45,7 +45,6 @@ public class CourseController : ControllerBase
                                     review : String
                                 }", builder =>
         {
-            builder.Types.Include<Course>();
             builder.Types.Include<Query>();
         });
 
