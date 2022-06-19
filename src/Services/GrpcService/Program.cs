@@ -1,8 +1,12 @@
-//using GrpcService.Services;
+using GrpcService.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<CourseDbContext>(options => 
+    options.UseSqlite("Data Source=CourseDb.sqlite"));
+
 builder.Services.AddGrpc();
 
 var app = builder.Build();
