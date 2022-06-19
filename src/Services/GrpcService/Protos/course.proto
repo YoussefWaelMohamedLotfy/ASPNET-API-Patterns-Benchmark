@@ -9,7 +9,7 @@ service CourseService {
     rpc GetCourses(google.protobuf.Empty) returns (CourseList);
     rpc GetCoursesAsStream(google.protobuf.Empty) returns (stream Course);
     rpc SendCourseAsStream(stream Course) returns (OkResponse);
-    rpc BiStream (stream Course) returns (CourseId);
+    rpc BiStream (stream Course) returns (stream CourseId);
 }
 
 message CourseId {
