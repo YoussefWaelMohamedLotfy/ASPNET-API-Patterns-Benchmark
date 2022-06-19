@@ -42,6 +42,9 @@ public class GrpcCourseService : CourseService.CourseServiceBase
 
         foreach (var item in courses)
         {
+            if (context.CancellationToken.IsCancellationRequested)
+                return;
+
             await responseStream.WriteAsync(item);
         }
     }
@@ -62,13 +65,15 @@ public class GrpcCourseService : CourseService.CourseServiceBase
     {
         await foreach (var course in requestStream.ReadAllAsync())
         {
+            if (context.CancellationToken.IsCancellationRequested)
+                return;
+
             try
             {
                 if (_dbContext.Courses.Any(c => c.Id == course.Id))
                 {
                     throw new RpcException(new Status(StatusCode.AlreadyExists, "The course record already exists."));
                 }
-
 
                 await _dbContext.Courses.AddAsync(course);
                 int count = await _dbContext.SaveChangesAsync();
