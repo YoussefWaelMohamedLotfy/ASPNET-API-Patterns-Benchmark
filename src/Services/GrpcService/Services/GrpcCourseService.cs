@@ -15,7 +15,7 @@ public class GrpcCourseService : CourseService.CourseServiceBase
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
-
+    
     public override async Task<CourseList> GetCourses(Empty request, ServerCallContext context)
     {
         var courses = await _dbContext.Courses

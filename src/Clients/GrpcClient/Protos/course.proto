@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Protos";
+
+import "Protos/rating.proto";
+import "google/protobuf/empty.proto";
+
+service CourseService {
+    rpc GetCourses(google.protobuf.Empty) returns (CourseList);
+    rpc GetCoursesAsStream(google.protobuf.Empty) returns (stream Course);
+    rpc SendCourseAsStream(stream Course) returns (OkResponse);
+    rpc BiStream (stream Course) returns (stream CourseId);
+}
+
+message CourseId {
+    string Id = 1;
+}
+
+message OkResponse {
+    string message = 1;
+}
+
+message Course {
+	int32 Id = 1;
+	string Title = 2;
+	int32 Duration = 3;
+	string Level = 4;
+	string Instructor = 5;
+	enum PaymentType {
+		option allow_alias = true;
+		FREE = 0;
+		COMPLIMENTARY = 0;
+		PAID = 1;
+		GIFT = 2;
+	}
+	PaymentType paymentType = 6;
+
+	message Section {
+		int32 Id = 1;
+		int32 CourseId = 2;
+		int32 SeqNo = 3;
+		string Title = 4;
+
+		message Lecture  {
+            int32 Id = 1;
+            int32 CourseId = 2;
+            int32 SectionId = 3;
+            int32 SeqNo = 4;
+            string Name = 5;
+
+            message Subject {
+                string MediaUrl = 1;
+            }
+                                              
+            message Assignment {
+                string instructions = 1;
+                string questions = 2;
+            }
+                                                  
+            oneof lecture {
+                Subject subject= 6;
+                Assignment assignment = 7;
+            }
+
+            string lectureType = 8;
+        }
+
+        repeated Lecture lectures = 5;
+    }
+
+    repeated Section sections = 7;
+    repeated Rating ratings = 8;
+}
+
+message CourseList {
+	repeated Course Courses = 1;
+}
+
