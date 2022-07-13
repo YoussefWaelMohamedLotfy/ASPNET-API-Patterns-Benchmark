@@ -1,6 +1,8 @@
 using GraphiQl;
 using GraphQL;
-using GraphQL.Server;
+using GraphQL.DataLoader;
+using GraphQL.MicrosoftDI;
+using GraphQL.SystemTextJson;
 using GraphQL.Types;
 using GraphQL_API.Data;
 using GraphQL_API.Queries;
@@ -15,9 +17,13 @@ builder.Services.AddDbContext<CourseDbContext>(options =>
 builder.Services.AddScoped<ISchema, CourseSchema>();
 builder.Services.AddScoped<ProQuery>();
 
-builder.Services.AddGraphQL(options => { options.EnableMetrics = false; })
-    .AddSystemTextJson()
-    .AddGraphTypes(ServiceLifetime.Scoped);
+builder.Services.AddGraphQL(builder =>
+{
+    builder.AddSystemTextJson()
+        .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
+        .AddGraphTypes()
+        .AddDataLoader();
+});
 
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 

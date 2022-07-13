@@ -65,6 +65,7 @@ public class CourseController : ControllerBase
         var result = await new DocumentExecuter()
             .ExecuteAsync(executionOptions =>
             {
+                executionOptions.EnableMetrics = true;
                 executionOptions.Schema = _schema;
                 executionOptions.Query = query.Query;
             });
